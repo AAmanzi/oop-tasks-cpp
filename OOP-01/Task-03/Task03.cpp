@@ -81,16 +81,48 @@ list<Student> StudentSeed()
 Student InputStudent()
 {
 	Student newStudent;
+	cout << "Please enter the following student's info" << endl << endl;
+	cout << "ID: ";
 	cin >> newStudent.Id;
+	cout << "Name: ";
 	cin >> newStudent.Name;
-	cin >> newStudent.Sex;/*
+	cout << "Sex: ";
+	cin >> newStudent.Sex;
+	cout << "Score on the first quiz: ";
 	cin >> newStudent.FirstQuizScore;
+	cout << "Score on the second quiz: ";
 	cin >> newStudent.SecondQuizScore;
+	cout << "Mid term test score: ";
 	cin >> newStudent.MidTermScore;
+	cout << "Final score: ";
 	cin >> newStudent.FinalScore;
-	cin >> newStudent.TotalScore;*/
+	newStudent.TotalScore = newStudent.FirstQuizScore + newStudent.SecondQuizScore + newStudent.MidTermScore + newStudent.FinalScore;
 
 	return newStudent;
+}
+
+void PrintStudent(Student toPrint)
+{
+	cout << "ID: " << toPrint.Id << endl;
+	cout << "Name: " << toPrint.Name << endl;
+	cout << "Sex: " << toPrint.Sex << endl;
+	cout << "Score on the first quiz: " << toPrint.FirstQuizScore << endl;
+	cout << "Score on the second quiz: " << toPrint.SecondQuizScore << endl;
+	cout << "Mid term test score: " << toPrint.MidTermScore << endl;
+	cout << "Final score: " << toPrint.FinalScore << endl;
+	cout << "Total score: " << toPrint.TotalScore << endl << endl;
+}
+
+bool CheckIdIntegrity(list<Student> allStudents, Student toCheck)
+{
+	for (Student student : allStudents)
+		{
+			if(strcmp(student.Id, toCheck.Id))
+			{
+				return false;
+			}
+		}
+	return true;
 }
 
 int main()
@@ -99,7 +131,7 @@ int main()
 
 	int currentTail = 3;
 
-	int choice = 0;
+	char choice;
 	do
 	{
 		PrintMainMenu();
@@ -107,15 +139,21 @@ int main()
 
 		switch (choice)
 		{
-		case 1:
+		case '1':
 			{
-				allStudents.push_back(InputStudent());
+				Student studentToAdd = InputStudent();
+
+				if(CheckIdIntegrity(allStudents, studentToAdd))
+					allStudents.push_back(studentToAdd);
+				else
+					cout << "A student with that ID already exists!" << endl;
 				break;
 			}
 
-		case 2:
+		case '2':
 			{
 				char idToDelete[20];
+				cout << "Enter the ID of the student you want to delete: " << endl;
 				cin >> idToDelete;
 				bool isIdFound = false;
 
@@ -129,7 +167,10 @@ int main()
 				}
 
 				if(!isIdFound)
+				{
+					cout << "No student with that ID exists!" << endl;
 					break;
+				}
 
 				allStudents.remove_if([idToDelete](Student const & student)
 				{
@@ -139,10 +180,12 @@ int main()
 				break;
 			}
 
-		case 3:
+		case '3':
 			{
 				char idToUpdate[20];
+				cout << "Enter the ID of the student you want to update" << endl;
 				cin >> idToUpdate;
+				bool isIdFound = false;
 
 				for (list<Student>::iterator i = allStudents.begin(); i != allStudents.end(); ++i)
 				{
@@ -155,34 +198,42 @@ int main()
 						strcpy(student.Id, tmpStudent.Id);
 						strcpy(student.Name, tmpStudent.Name);
 						strcpy(student.Sex, tmpStudent.Sex);
+						student.FirstQuizScore = tmpStudent.FirstQuizScore;
+						student.SecondQuizScore = tmpStudent.SecondQuizScore;
+						student.MidTermScore = tmpStudent.MidTermScore;
+						student.FinalScore = tmpStudent.FinalScore;
+						student.TotalScore = student.FirstQuizScore + student.SecondQuizScore + 
+							student.MidTermScore + student.FinalScore;
 
+						isIdFound = true;
 						break;
 					}
 				}
 
+				if(!isIdFound)
+				{
+					cout << "No student with that ID exists!" << endl;
+					break;
+				}
+
 				break;
 			}
 
-		case 4:
+		case '4':
 			{
 				for (Student student : allStudents)
 				{
-					cout << student.Id << endl;
-					cout << student.Name << endl;
-					cout << student.Sex << endl;
-					cout << student.FirstQuizScore << endl;
-					cout << student.SecondQuizScore << endl;
-					cout << student.MidTermScore << endl;
-					cout << student.FinalScore << endl;
-					cout << student.TotalScore << endl << endl;
+					PrintStudent(student);
 				}
 				
 				break;
 			}
-		case 5:
+		case '5':
 			{
 				char idToFind[20];
+				cout << "Enter the ID of the student you want to know the score average:" << endl;
 				cin >> idToFind;
+				bool isIdFound = false;
 
 				for (Student student : allStudents)
 				{
@@ -191,12 +242,19 @@ int main()
 						double studentScoreAverage = student.TotalScore / 4;
 
 						cout << student.Name << "'s score average is: " << studentScoreAverage << endl;
+						isIdFound = true;
 						break;
 					}
 				}
+				if(!isIdFound)
+				{
+					cout << "No student with that ID exists!" << endl;
+					break;
+				}
+
 				break;
 			}
-		case 6:
+		case '6':
 			{
 				list<Student> sortedStudents = allStudents;
 				sortedStudents.sort([] (Student const &first, Student const &second) 
@@ -207,7 +265,7 @@ int main()
 				break;
 			}
 
-		case 7:
+		case '7':
 			{
 				list<Student> sortedStudents = allStudents;
 				sortedStudents.sort([] (Student const &first, Student const &second) 
@@ -218,23 +276,18 @@ int main()
 				break;
 			}
 
-		case 8:
+		case '8':
 			{
-				char idToDelete[20];
-				cin >> idToDelete;
+				char idToFind[20];
+				cout << "Enter the ID of the student you want to find:" << endl;
+				cin >> idToFind;
 				bool isIdFound = false;
 
 				for (Student student : allStudents)
 				{
-					if(strcmp(student.Id, idToDelete) == 0)
+					if(strcmp(student.Id, idToFind) == 0)
 					{
-						cout << student.Name << endl;
-						cout << student.Sex << endl;
-						cout << student.FirstQuizScore << endl;
-						cout << student.SecondQuizScore << endl;
-						cout << student.MidTermScore << endl;
-						cout << student.FinalScore << endl;
-						cout << student.TotalScore << endl << endl;
+						PrintStudent(student);
 						isIdFound = true;
 						break;
 					}
@@ -247,7 +300,7 @@ int main()
 				break;
 			}
 
-		case 9:
+		case '9':
 			{
 				list<Student> sortedStudents = allStudents;
 				sortedStudents.sort([] (Student const &first, Student const &second) 
@@ -255,16 +308,11 @@ int main()
 
 				for (Student student : sortedStudents)
 				{
-					cout << student.Name << endl;
-					cout << student.Sex << endl;
-					cout << student.FirstQuizScore << endl;
-					cout << student.SecondQuizScore << endl;
-					cout << student.MidTermScore << endl;
-					cout << student.FinalScore << endl;
-					cout << student.TotalScore << endl << endl;
+					PrintStudent(student);
 				}
+
+				break;
 			}
-		
 		}
-	}while (choice != 0);
+	}while (choice != '0');
 }
