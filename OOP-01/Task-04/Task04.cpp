@@ -27,8 +27,5 @@ int main()
 
 	result++;
 
-	cout << result << endl;
-	cout << newArray[6] << endl;
-
 	system("pause");
 }
