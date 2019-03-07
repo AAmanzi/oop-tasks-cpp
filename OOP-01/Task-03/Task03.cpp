@@ -23,11 +23,8 @@ int main()
 {
 	int newArray[] = {1234, 4542, 1241, 7532, 1357, 8531, 5421, 7532, 1039, 9860};
 
-	int& result = FindItem(newArray);
+	FindItem(newArray) += 1;
 
-	result++;
-
-	cout << result << endl;
 	cout << newArray[6] << endl;
 
 	system("pause");
