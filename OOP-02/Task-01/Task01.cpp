@@ -48,6 +48,8 @@ int main()
 	}
 
 	auto sortedList = InsertOnes(numberList);
+	sortedList.clear();
+	numberList.clear();
 
 	system("pause");
 }
