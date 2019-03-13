@@ -86,5 +86,4 @@ int main()
 	VectorFront(newVector)++;
 	VectorBack(newVector)++;
 
-	system("pause");
 }
