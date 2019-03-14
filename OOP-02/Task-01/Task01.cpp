@@ -31,9 +31,29 @@ list<int> InsertOnes (list<int> listToEdit)
 	return listToEdit;
 }
 
+void InsertOnes(int** toEdit, int toEditSize)
+{
+	for(auto i = 1; i < 10; ++i)
+	{
+		auto isContained = false;
+		for(auto j = 0; j < toEditSize-1; ++j)
+		{
+			if(i == (*toEdit)[j]){
+				isContained = true;
+				break;
+			}
+		}
+		if(!isContained)
+		{
+			(*toEdit)[toEditSize-1] = i;
+			return;
+		}
+	}
+}
+
 int main()
 {
-	int arrayLength;
+	/*int arrayLength;
 
 	cout << "Enter the length of the array: ";
 	cin >> arrayLength;
@@ -49,7 +69,20 @@ int main()
 
 	auto sortedList = InsertOnes(numberList);
 	sortedList.clear();
-	numberList.clear();
+	numberList.clear();*/
+
+	int* numberList = new int[9];
+
+	for (auto i = 0; i < 8; ++i)
+	{
+		int input;
+		cin >> input;
+		numberList[i] = input;
+	}
+
+	InsertOnes(&numberList, 9);
+	delete [] numberList;
+	numberList = nullptr;
 
 	system("pause");
 }

@@ -35,7 +35,7 @@ int main()
 	cout << "Enter the length of the array: ";
 	cin >> arraySize;
 
-	int* newArray = new int[arraySize];
+	auto newArray = new int[arraySize];
 
 	for (auto i = 0; i < arraySize; i++)
 	{
@@ -48,6 +48,9 @@ int main()
 	{
 		cout << newArray[i] << " ";
 	}
+
+	delete [] newArray;
+	newArray = nullptr;
 
 	system("pause");
 }

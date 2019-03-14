@@ -8,62 +8,74 @@ struct Vector
 	int* Elements;
 	int Size;
 	int Capacity;
-};
 
-Vector NewVector(int capacity)
-{
-	Vector newVector;
-	newVector.Elements = new int[capacity];
-	newVector.Size = 0;
-	newVector.Capacity = capacity;
-
-	return newVector;
-}
-
-Vector NewVector(int* arrayToCopyStart, int* arrayToCopyEnd)
-{
-	Vector newVector;
-	newVector.Elements = arrayToCopyStart;
-	newVector.Size = arrayToCopyEnd - arrayToCopyStart + 1;
-	newVector.Capacity = newVector.Size;
-
-	return newVector;
-}
-
-void DeleteVector(Vector *toDelete)
-{
-	delete [] toDelete->Elements;
-	toDelete->Elements = nullptr;
-	toDelete->Size = NULL;
-	toDelete->Capacity = NULL;
-}
-
-void VectorPushBack(Vector *toUpdate, int value)
-{
-	if(toUpdate->Size == toUpdate->Capacity)
+	void NewVector(int capacity)
 	{
-		toUpdate->Capacity *= 2;
+		Elements = new int[capacity];
+		Size = 0;
+		Capacity = capacity;
 	}
 
-	toUpdate->Elements[toUpdate->Size] = value;
-	++toUpdate->Size;
-}
+	void NewVector(int* arrayToCopyStart, int* arrayToCopyEnd)
+	{
+		Elements = arrayToCopyStart;
+		Size = arrayToCopyEnd - arrayToCopyStart + 1;
+		Capacity = Size;
+	}
 
-void VectorPopBack(Vector *toUpdate)
-{
-	--toUpdate->Size;
-	toUpdate->Elements[toUpdate->Size] = NULL;
-}
+	void DeleteVector()
+	{
+		delete [] Elements;
+		Elements = nullptr;
+		Size = NULL;
+		Capacity = NULL;
+	}
 
-int& VectorFront(Vector toGetFront)
-{
-	return toGetFront.Elements[0];
-}
+	
+	void VectorPushBack(int value)
+	{
+		if(Size == Capacity)
+		{
+			Vector tmp;
+			tmp.NewVector(Capacity * 2);
+			for (auto i = 0; i < Size; ++i)
+			{
+				tmp.Elements[i] = Elements[i];
+				tmp.Size++;
+			}
+			tmp.Elements[Size] = value;
+			tmp.Size++;
+			Elements = tmp.Elements;
+			Size = tmp.Size;
+			Capacity = tmp.Capacity;
 
-int& VectorBack(Vector toGetBack)
-{
-	return toGetBack.Elements[toGetBack.Size-1];
-}
+			tmp.DeleteVector();
+		}
+		else
+		{
+			Elements[Size] = value;
+			Size++;
+		}
+	}
+	
+	void VectorPopBack()
+	{
+		
+		Elements[--Size] = NULL;
+	}
+
+	int& VectorFront()
+	{
+		return Elements[0];
+	}
+
+	int& VectorBack()
+	{
+		return Elements[Size-1];
+	}
+};
+
+
 
 int main()
 {
@@ -73,18 +85,19 @@ int main()
 
 	int* newArray = new int[arraySize];
 
-	for (int i = 0; i < arraySize; ++i)
+	for (auto i = 0; i < arraySize; ++i)
 	{
 		cin >> newArray[i];
 	}
 
-	Vector newVector = NewVector(newArray, &newArray[arraySize-1]);
+	Vector newVector;
+	newVector.NewVector(newArray, &newArray[arraySize-1]);
 
-	VectorPushBack(&newVector, 20);
-	VectorPopBack(&newVector);
+	newVector.VectorPushBack(20);
+	newVector.VectorPopBack();
 
-	VectorFront(newVector)++;
-	VectorBack(newVector)++;
+	newVector.VectorFront()++;
+	newVector.VectorBack()++;
 
 	system("pause");
 }
