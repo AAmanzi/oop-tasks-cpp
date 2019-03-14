@@ -50,7 +50,7 @@ void VectorPushBack(Vector *toUpdate, int value)
 
 void VectorPopBack(Vector *toUpdate)
 {
-	toUpdate->Elements[toUpdate->Size--] = NULL;
+	toUpdate->Elements[toUpdate->Size-- - 1] = NULL;
 }
 
 int& VectorFront(Vector toGetFront)
