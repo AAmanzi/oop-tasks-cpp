@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include<vector>
-#include<random>
+#include <vector>
+#include <ctime>
 
 using namespace std;
 
@@ -17,16 +17,17 @@ int matchesRemaining(vector<bool> matches)
 
 int main()
 {
+	srand(time(NULL));
+
 	vector<bool> matchBox(21);
 	auto i = matchBox.begin();
-	default_random_engine seed;
-	uniform_int_distribution<int> distribution(1,3);
+	
 	auto remaining = 21;
 	auto win = false;
 
 	do
 	{
-		auto computerMatches = distribution(seed) % remaining;
+		auto computerMatches = (rand() % 2 + 1)% remaining;
 
 		if(remaining == 1)
 			computerMatches = 1;
