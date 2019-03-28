@@ -43,8 +43,8 @@ int main()
 {
 	srand(time(NULL));
 
-	vector<int> vector1 = NewVector(true, 0, 20, 10);
-	vector<int> vector2 = NewVector(true, 0, 20, 10); 
+	auto vector1 = NewVector(true, 0, 20, 10);
+	auto vector2 = NewVector(true, 0, 20, 10); 
 
 	vector<int> newVector;
 
