@@ -8,8 +8,11 @@ class Gun
 public:
 	Gun();
 	Gun(const Point& location, int magazineSize, int availableBullets);
+	Gun(const Point& location, int magazineSize);
+	int GetMagazineSize();
+	int GetAvailableBullets();
+	Point GetLocation();
 	bool IsEmpty() const;
 	void Shoot();
 	void Reload();
 };
-

@@ -9,3 +9,10 @@ void Target::Hit()
 {
 	IsHit = true;
 }
+
+bool Target::IsOnYAxis(const int yAxis) const
+{
+	const auto maxHeight = BottomLeftCorner.GetY() + Height;
+
+	return yAxis <= maxHeight && yAxis >= BottomLeftCorner.GetY();
+}

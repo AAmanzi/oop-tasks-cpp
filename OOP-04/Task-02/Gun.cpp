@@ -9,6 +9,26 @@ Gun::Gun(const Point& location, int magazineSize, int availableBullets) :
 	MagazineSize(magazineSize), 
 	AvailableBullets(availableBullets){};
 
+Gun::Gun(const Point& location, int magazineSize) : 
+	Location(location), 
+	MagazineSize(magazineSize), 
+	AvailableBullets(magazineSize){};
+
+int Gun::GetMagazineSize()
+{
+	return MagazineSize;
+}
+
+int Gun::GetAvailableBullets()
+{
+	return AvailableBullets;
+}
+
+Point Gun::GetLocation()
+{
+	return Location;
+}
+
 bool Gun::IsEmpty() const
 {
 	return (AvailableBullets == 0);

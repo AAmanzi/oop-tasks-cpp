@@ -115,6 +115,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Task-01\Point.h" />
+    <ClInclude Include="Gun.h" />
+    <ClInclude Include="Target.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Task-01\Point.cpp" />
+    <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Target.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

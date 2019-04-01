@@ -9,5 +9,6 @@ class Target
 public:
 	Target(const Point& bottomLeftCorner, int width, int height);
 	void Hit();
+	bool IsOnYAxis(int yAxis) const;
 };
 
