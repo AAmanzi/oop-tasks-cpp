@@ -30,10 +30,13 @@ int main()
 		targets.push_back(*newTarget);
 	}
 
+	auto targetsHit = 0;
+
 	for (auto target : targets)
 	{
 		if(target.IsOnYAxis(newGun->GetLocation().GetY()))
 		{
+			targetsHit++;
 			cout << "hit";
 			newGun->Shoot();
 			target.Hit();
@@ -41,6 +44,8 @@ int main()
 				newGun->Reload();
 		}
 	}
+
+	cout << "targets hit: " << targetsHit << endl;
 
 	system("pause");
 }
