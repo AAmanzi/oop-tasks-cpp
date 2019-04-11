@@ -38,3 +38,15 @@ Vec3 operator+(const Vec3& vecL, const Vec3& vecR)
 
 	return *new Vec3(vecL.Start, endPoint);
 }
+
+Vec3 operator-(const Vec3& vecL, const Vec3& vecR)
+{
+	const auto endPoint = *new Point(
+		vecR.Start.GetX() - vecR.End.GetX(),
+		vecR.Start.GetY() - vecR.End.GetY(),
+		vecR.Start.GetZ() - vecR.End.GetZ()
+	);
+	const auto tmpVector = *new Vec3(vecR.Start, endPoint);
+
+	return vecL + tmpVector;
+}

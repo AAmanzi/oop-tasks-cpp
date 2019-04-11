@@ -12,5 +12,6 @@ public:
 	Vec3& operator=(const Vec3& toCopy);
 
 	friend Vec3 operator+(const Vec3& vecL, const Vec3& vecR);
+	friend Vec3 operator-(const Vec3& vecL, const Vec3& vecR);
 };
 
