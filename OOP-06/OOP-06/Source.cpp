@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	auto endPoint = *new Point(5, 0, 0);
+	auto endPoint = *new Point(5, 10, 15);
  	auto testVector_1 = *new Vec3(endPoint);
 
 	auto testVector_2 = testVector_1;
@@ -17,6 +17,8 @@ int main()
 
 	testVector_1 += testVector_2;
 	testVector_1 -= testVector_2;
+
+	cout << testVector_2.Normalize();
 
 	system("pause");
 }

@@ -7,12 +7,12 @@ Point::Point() :
 	Y(0),
 	Z(0){};
 
-Point::Point(double x, double y, double z) :
+Point::Point(int x, int y, int z) :
 	X(x),
 	Y(y),
 	Z(z){};
 
-Point::Point(double minInterval, double maxInterval)
+Point::Point(int minInterval, int maxInterval)
 {
 	auto f = static_cast<double>(rand()) / RAND_MAX;
 	X = minInterval + f * (maxInterval - minInterval);
@@ -27,29 +27,19 @@ Point::Point(const Point &copy) :
 	Y(copy.Y),
 	Z(copy.Z){};
 
-double Point::GetX() const
+int Point::GetX() const
 {
 	return X;
 }
 
-double Point::GetY() const
+int Point::GetY() const
 {
 	return Y;
 }
 
-double Point::GetZ() const
+int Point::GetZ() const
 {
 	return Z;
-}
-
-double Point::GetDistance(double x, double y) const
-{
-	return sqrt(pow(X - x, 2) + pow(Y - y, 2));
-}
-
-double Point::GetDistance(double x, double y, double z) const
-{
-	return sqrt(pow(X - x, 2) + pow(Y - y, 2) + pow(Z - z, 2));
 }
 
 Point& Point::operator=(const Point& toCopy)
@@ -58,4 +48,16 @@ Point& Point::operator=(const Point& toCopy)
 	Y = toCopy.Y;
 	Z = toCopy.Z;
 	return *this;
+}
+
+istream& operator>>(istream& input, Point& toInput)
+{
+	input >> toInput.X >> toInput.Y >> toInput.Z;
+	return input;
+}
+
+ostream& operator<<(ostream& output, const Point& toOutput)
+{
+	output << "(" << toOutput.X << ", " << toOutput.Y << ", " << toOutput.Z << ")" << endl;
+	return output;
 }

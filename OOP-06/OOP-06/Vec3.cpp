@@ -1,40 +1,48 @@
 #include "Vec3.h"
 #include "Point.h"
 
+int Vec3::Counter = 0;
+
 Vec3::Vec3()
 {
-	Start = *new Point();
 	End = *new Point();
+	++Counter;
 }
 
 Vec3::Vec3(const Point& end)
 {
-	Start = *new Point();
 	End = end;
+	++Counter;
 }
 
 Vec3::Vec3(const Point& start, const Point& end)
 {
-	Start = start;
-	End = end;
+	End = *new Point(
+		end.GetX() - start.GetX(),
+		end.GetY() - start.GetY(),
+		end.GetZ() - start.GetZ()
+	);
+	++Counter;
+}
+
+Vec3::~Vec3()
+{
+	--Counter;
 }
 
 Vec3& Vec3::operator=(const Vec3& toCopy)
 {
-	Start = toCopy.Start;
 	End = toCopy.End;
+	++Counter;
 	return *this;
 }
 
 Vec3& Vec3::operator+=(const Vec3& toCopy)
 {
-	const auto differenceX = End.GetX() - toCopy.Start.GetX();
-	const auto differenceY = End.GetY() - toCopy.Start.GetY();
-	const auto differenceZ = End.GetZ() - toCopy.Start.GetZ();
 	const auto endPoint = *new Point(
-		differenceX + toCopy.End.GetX(),
-		differenceY + toCopy.End.GetY(),
-		differenceZ + toCopy.End.GetZ()
+		End.GetX() + toCopy.End.GetX(),
+		End.GetY() + toCopy.End.GetY(),
+		End.GetZ() + toCopy.End.GetZ()
 	);
 
 	End = endPoint;
@@ -44,17 +52,17 @@ Vec3& Vec3::operator+=(const Vec3& toCopy)
 Vec3& Vec3::operator-=(const Vec3& toCopy)
 {
 	const auto endPoint = *new Point(
-		toCopy.Start.GetX() - toCopy.End.GetX(),
-		toCopy.Start.GetY() - toCopy.End.GetY(),
-		toCopy.Start.GetZ() - toCopy.End.GetZ()
+		0 - toCopy.End.GetX(),
+		0 - toCopy.End.GetY(),
+		0 - toCopy.End.GetZ()
 	);
-	const auto tmpVector = *new Vec3(toCopy.Start, endPoint);
+	const auto tmpVector = *new Vec3(endPoint);
 	End = (*this + tmpVector).End;
 
 	return *this;
 }
 
-Vec3& Vec3::operator*=(const double& scalar)
+Vec3& Vec3::operator*=(const int& scalar)
 {
 	Point endPoint = *new Point(
 		End.GetX() * scalar,
@@ -66,7 +74,7 @@ Vec3& Vec3::operator*=(const double& scalar)
 	return *this;
 }
 
-Vec3& Vec3::operator/=(const double& scalar)
+Vec3& Vec3::operator/=(const int& scalar)
 {
 	Point endPoint = *new Point(
 		End.GetX() / scalar,
@@ -78,33 +86,94 @@ Vec3& Vec3::operator/=(const double& scalar)
 	return *this;
 }
 
+int Vec3::operator[](const std::string& param) const
+{
+	if(param == "x" || param == "X")
+		return End.GetX();
+	if(param == "y" || param == "Y")
+		return End.GetY();
+	if(param == "z" || param == "Z")
+		return End.GetZ();
+	return 0;
+}
+
+bool Vec3::operator==(const Vec3& vecR) const
+{
+	return End.GetX() == vecR.End.GetX() &&
+		End.GetY() == vecR.End.GetY() &&
+		End.GetZ() == vecR.End.GetZ();
+}
+
+bool Vec3::operator!=(const Vec3& vecR) const
+{
+	return End.GetX() != vecR.End.GetX() ||
+		End.GetY() != vecR.End.GetY() ||
+		End.GetZ() != vecR.End.GetZ();
+}
+
+Vec3 Vec3::Normalize() const
+{
+	auto min = End.GetX();
+	auto mid = End.GetY();
+	auto max = End.GetZ();
+
+	if(min > mid)
+	{
+		min += mid;
+		mid = min - mid;
+		min -= mid;
+	}
+	if(min > max)
+	{
+		min += max;
+		max = min - max;
+		min -= max;
+	}
+	if(mid > max)
+	{
+		mid += max;
+		max = mid - max;
+		mid -= max;
+	}
+
+	auto maxDivisor = 1;
+	for(auto i = 2; i <= min; ++i)
+	{
+		if(min % i == 0 && mid % i == 0 && max % i == 0)
+		{
+			maxDivisor = i;
+		}
+	}
+
+	const auto endPoint = *new Point(End.GetX() / maxDivisor, End.GetY() / maxDivisor, End.GetZ()/ maxDivisor);
+
+	return *new Vec3(endPoint);
+}
+
 Vec3 operator+(const Vec3& vecL, const Vec3& vecR)
 {
-	const auto differenceX = vecL.End.GetX() - vecR.Start.GetX();
-	const auto differenceY = vecL.End.GetY() - vecR.Start.GetY();
-	const auto differenceZ = vecL.End.GetZ() - vecR.Start.GetZ();
 	const auto endPoint = *new Point(
-		differenceX + vecR.End.GetX(),
-		differenceY + vecR.End.GetY(),
-		differenceZ + vecR.End.GetZ()
+		vecL.End.GetX() + vecR.End.GetX(),
+		vecL.End.GetY() + vecR.End.GetY(),
+		vecL.End.GetY() + vecR.End.GetZ()
 	);
 
-	return *new Vec3(vecL.Start, endPoint);
+	return *new Vec3(endPoint);
 }
 
 Vec3 operator-(const Vec3& vecL, const Vec3& vecR)
 {
 	const auto endPoint = *new Point(
-		vecR.Start.GetX() - vecR.End.GetX(),
-		vecR.Start.GetY() - vecR.End.GetY(),
-		vecR.Start.GetZ() - vecR.End.GetZ()
+		0 - vecR.End.GetX(),
+		0 - vecR.End.GetY(),
+		0 - vecR.End.GetZ()
 	);
-	const auto tmpVector = *new Vec3(vecR.Start, endPoint);
+	const auto tmpVector = *new Vec3(endPoint);
 
 	return vecL + tmpVector;
 }
 
-Vec3 operator*(const Vec3& vecL, const double& scalar)
+Vec3 operator*(const Vec3& vecL, const int& scalar)
 {
 	Point endPoint = *new Point(
 		vecL.End.GetX() * scalar,
@@ -112,10 +181,10 @@ Vec3 operator*(const Vec3& vecL, const double& scalar)
 		vecL.End.GetZ() * scalar
 	);
 
-	return *new Vec3(vecL.Start, endPoint);
+	return *new Vec3(endPoint);
 }
 
-Vec3 operator/(const Vec3& vecL, const double& scalar)
+Vec3 operator/(const Vec3& vecL, const int& scalar)
 {
 	Point endPoint = *new Point(
 		vecL.End.GetX() / scalar,
@@ -123,5 +192,28 @@ Vec3 operator/(const Vec3& vecL, const double& scalar)
 		vecL.End.GetZ() / scalar
 	);
 
-	return *new Vec3(vecL.Start, endPoint);
+	return *new Vec3(endPoint);
+}
+
+Vec3 operator*(const Vec3& vecL, const Vec3& vecR)
+{
+	auto endPoint = *new Point(
+		vecL.End.GetX() * vecR.End.GetX(),
+		vecL.End.GetY() * vecR.End.GetY(),
+		vecL.End.GetZ() * vecR.End.GetZ()
+	);
+
+	return *new Vec3(endPoint);
+}
+
+istream& operator>>(istream& input, Vec3& toInput)
+{
+	input >> toInput.End;
+	return input;
+}
+
+ostream& operator<<(ostream& output, const Vec3& toOutput)
+{
+	output << toOutput.End;
+	return output;
 }
