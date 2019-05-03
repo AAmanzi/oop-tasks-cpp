@@ -1,46 +1,63 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "ZooAnimal.h"
+#include <ctime>
 
-ZooAnimal::ZooAnimal(string species, string name, int yearOfBirth,
-	int lifeExpectancyInYears, int cageNumber, int mealsPerDay)
+zoo::ZooAnimal::ZooAnimal
+	(
+		std::string species,
+		std::string name, 
+		int yearOfBirth, 
+		int lifespanInYears, 
+		int cageNumber, 
+		int mealsPerDay,
+		std::string fertilizationType,
+		std::string thermoregulationType
+	)
 {
 	Species = species,
 	Name = name;
 	YearOfBirth = yearOfBirth;
-	LifeExpectancyInYears = lifeExpectancyInYears;
+	LifespanInYears = lifespanInYears;
 	CageNumber = cageNumber;
 	MealsPerDay = mealsPerDay;
-	MassByYear = * new map<int, int>[lifeExpectancyInYears * 2];
+	MassByYear = * new std::map<int, int>[lifespanInYears * 2];
+	FertilizationType = fertilizationType;
+	ThermoregulationType = thermoregulationType;
 }
 
-ZooAnimal::~ZooAnimal()
+zoo::ZooAnimal::ZooAnimal()
+= default;
+
+zoo::ZooAnimal::~ZooAnimal()
 {
 	MassByYear.clear();
 }
 
-ZooAnimal::ZooAnimal(const ZooAnimal &copy) :
+zoo::ZooAnimal::ZooAnimal(const ZooAnimal &copy) :
 	Species(copy.Species),
 	Name(copy.Name),
 	YearOfBirth(copy.YearOfBirth),
-	LifeExpectancyInYears(copy.LifeExpectancyInYears),
+	LifespanInYears(copy.LifespanInYears),
 	CageNumber(copy.CageNumber),
 	MealsPerDay(copy.MealsPerDay),
-	MassByYear(copy.MassByYear){};
+	MassByYear(copy.MassByYear),
+	FertilizationType(copy.FertilizationType),
+	ThermoregulationType(copy.ThermoregulationType){};
 
-int ZooAnimal::MealsIncrease()
+int zoo::ZooAnimal::MealsIncrease()
 {
 	MealsPerDay++;
 	return MealsPerDay;
 }
 
-int ZooAnimal::MealsDecrease()
+int zoo::ZooAnimal::MealsDecrease()
 {
 	MealsPerDay--;
 	return MealsPerDay;
 }
 
-bool ZooAnimal::TryAddMassInfo(int currentMass)
+bool zoo::ZooAnimal::TryAddMassInfo(int currentMass)
 {
 	const auto now = Clock::now();
     auto nowC = Clock::to_time_t(now);
@@ -49,25 +66,25 @@ bool ZooAnimal::TryAddMassInfo(int currentMass)
 
 	if(MassByYear.find(currentYear) == MassByYear.end())
 	{
-		MassByYear.insert(pair<int, int>(currentYear, currentMass));
+		MassByYear.insert(std::pair<int, int>(currentYear, currentMass));
 		return true;
 	}
-	cout << "Mass info for that year already exists!";
+	std::cout << "Mass info for that year already exists!";
 	return false;
 }
 
-bool ZooAnimal::TryAddMassInfo(int mass, int yearToAdd)
+bool zoo::ZooAnimal::TryAddMassInfo(int mass, int yearToAdd)
 {
 	if(MassByYear.find(yearToAdd) == MassByYear.end())
 	{
-		MassByYear.insert(pair<int, int>(yearToAdd, mass));
+		MassByYear.insert(std::pair<int, int>(yearToAdd, mass));
 		return true;
 	}
-	cout << "Mass info for that year already exists!";
+	std::cout << "Mass info for that year already exists!";
 	return false;
 }
 
-int ZooAnimal::MassChangeDrastic()
+int zoo::ZooAnimal::MassChangeDrastic()
 {
 	const auto now = Clock::now();
     auto nowC = Clock::to_time_t(now);
@@ -76,12 +93,12 @@ int ZooAnimal::MassChangeDrastic()
 
 	if(MassByYear.find(currentYear) == MassByYear.end())
 	{
-		cout << "This year's mass wasn't recorded yet!" << endl;
+		std::cout << "This year's mass wasn't recorded yet!" << std::endl;
 		return 404;
 	}
 	if(MassByYear.find(currentYear-1) == MassByYear.end())
 	{
-		cout << "Last year's mass hasn't been recorded!" << endl;
+		std::cout << "Last year's mass hasn't been recorded!" << std::endl;
 		return 403;
 	}
 
@@ -102,24 +119,69 @@ int ZooAnimal::MassChangeDrastic()
 	return 0;
 }
 
-void ZooAnimal::Print() const
+int zoo::ZooAnimal::GetMass()
 {
 	const auto now = Clock::now();
     auto nowC = Clock::to_time_t(now);
 	const auto currentTime = localtime(&nowC);
 	const auto currentYear = currentTime->tm_year + 1900;
-
-	cout << Name << endl;
-	cout << "Species: " << Species << endl;
-	cout << "Year of birth: " << YearOfBirth << endl;
-	cout << "Life expectancy: " << LifeExpectancyInYears << "years " << endl;
-	cout << "Cage number: " << CageNumber << endl;
-	cout << "Meals per day: " << MealsPerDay << endl;
-	cout << "Mass: " << MassByYear.find(currentYear)->second << endl;
-	cout << endl;
+	return MassByYear.find(currentYear)->second;
 }
 
-string ZooAnimal::GetName() const
+auto zoo::ZooAnimal::GetName() const -> std::string
 {
 	return Name;
+}
+
+void zoo::ZooAnimal::OutputTo(std::ostream& outputStream) const
+{
+	outputStream << "Name: " << Name << std::endl;
+	outputStream << "Species: " << Species << std::endl;
+	outputStream << "Year of birth: " << YearOfBirth << std::endl;
+	outputStream << "Life expectancy: " << LifespanInYears << " years" << std::endl;
+	outputStream << "Cage number: " << CageNumber << std::endl;
+	outputStream << "Meals per day: " << MealsPerDay << std::endl;
+	outputStream << "Type of fertilization: " << FertilizationType << std::endl;
+	outputStream << "Type of thermoregulation: " << ThermoregulationType << std::endl;
+}
+
+void zoo::ZooAnimal::InputTo(std::istream& inputStream)
+{
+	std::cout << "Species: ";
+	inputStream >> Species;
+	std::cout << "Lifespan (years): ";
+	inputStream >> LifespanInYears;
+	std::cout << "Type of fertilization: ";
+	inputStream >> FertilizationType;
+	std::cout << "Type of thermoregulation: ";
+	inputStream >> ThermoregulationType;
+}
+
+void zoo::ZooAnimal::SetDefaults()
+{
+}
+
+std::istream& zoo::operator>>(std::istream& inputStream, ZooAnimal& toInput)
+{
+	toInput.InputTo(inputStream);
+
+	std::cout << "Name: ";
+	inputStream >> toInput.Name;
+	std::cout << "Year of birth: ";
+	inputStream >> toInput.YearOfBirth;
+	std::cout << "Cage number: ";
+	inputStream >> toInput.CageNumber;
+	std::cout << "Meals per day: ";
+	inputStream >> toInput.MealsPerDay;
+
+	toInput.SetDefaults();
+
+	return inputStream;
+}
+
+std::ostream& zoo::operator<<(std::ostream& outputStream, const ZooAnimal& toOutput)
+{
+	toOutput.OutputTo(outputStream);
+
+	return outputStream;
 }

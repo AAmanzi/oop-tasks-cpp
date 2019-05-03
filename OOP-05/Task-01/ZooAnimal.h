@@ -1,29 +1,56 @@
 #pragma once
 #include <string>
 #include <chrono>
-#include <ctime>
 #include <iostream>
 #include <map>
 
-using namespace std;
 typedef std::chrono::system_clock Clock;
 
-class ZooAnimal
+namespace zoo
 {
-	string Species, Name;
-	int YearOfBirth, LifeExpectancyInYears;
-	int CageNumber, MealsPerDay;
-	map<int, int> MassByYear;
-public:
-	ZooAnimal(string species, string name, int yearOfBirth, int lifeExpectancyInYears, int cageNumber,
-	          int mealsPerDay);
-	~ZooAnimal();
-	ZooAnimal(const ZooAnimal& copy);
-	int MealsIncrease();
-	int MealsDecrease();
-	bool TryAddMassInfo(int currentMass);
-	bool TryAddMassInfo(int mass, int yearToAdd);
-	int MassChangeDrastic();
-	void Print() const;
-	string GetName() const;
-};
+	class ZooAnimal
+	{
+	protected:
+		virtual void OutputTo(std::ostream& outputStream) const;
+		virtual void InputTo(std::istream& inputStream);
+		virtual void SetDefaults();
+	public:
+		std::string Species;
+		std::string Name;
+		int YearOfBirth{};
+		int LifespanInYears{};
+		int CageNumber{};
+		int MealsPerDay{};
+		std::map<int, int> MassByYear;
+		std::string FertilizationType;
+		std::string ThermoregulationType;
+
+		ZooAnimal
+		(
+			std::string species,
+			std::string name, 
+			int yearOfBirth, 
+			int lifespanInYears, 
+			int cageNumber, 
+		    int mealsPerDay, 
+			std::string fertilizationType, 
+			std::string thermoregulationType
+		);
+
+		ZooAnimal();
+		ZooAnimal(const ZooAnimal& copy);
+		virtual ~ZooAnimal();
+
+		friend std::istream & operator>>(std::istream& inputStream, ZooAnimal& toInput);
+		friend std::ostream & operator<<(std::ostream& outputStream, const ZooAnimal& toOutput);
+
+		int MealsIncrease();
+		int MealsDecrease();
+		bool TryAddMassInfo(int currentMass);
+		bool TryAddMassInfo(int mass, int yearToAdd);
+		int MassChangeDrastic();
+		int GetMass();
+
+		std::string GetName() const;
+	};
+}
