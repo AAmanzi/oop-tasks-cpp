@@ -5,7 +5,8 @@ zoo::Crocodile::Crocodile
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Reptile
 	(
@@ -14,7 +15,8 @@ zoo::Crocodile::Crocodile
 		yearOfBirth, 
 		70, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		3, 
 		30
 	)

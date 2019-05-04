@@ -5,7 +5,8 @@ zoo::Monkey::Monkey
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Mammal
 	(
@@ -14,7 +15,8 @@ zoo::Monkey::Monkey
 		yearOfBirth, 
 		20, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		6, 
 		37
 	)

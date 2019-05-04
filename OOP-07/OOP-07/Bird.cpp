@@ -8,6 +8,7 @@ zoo::Bird::Bird
 		int lifespanInYears, 
 		int cageNumber, 
 		int mealsPerDay,
+		int mealPortionInKg,
 		int incubationPeriodInMonths, 
 		int avgTemperatureInCelsius
 	)
@@ -18,7 +19,8 @@ zoo::Bird::Bird
 		yearOfBirth, 
 		lifespanInYears, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		"Oviparous", 
 		"Warm-blooded"
 	)

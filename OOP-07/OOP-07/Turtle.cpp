@@ -5,7 +5,8 @@ zoo::Turtle::Turtle
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Reptile
 	(
@@ -14,7 +15,8 @@ zoo::Turtle::Turtle
 		yearOfBirth, 
 		57, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		3, 
 		30
 	)

@@ -14,7 +14,8 @@ namespace zoo
 			std::string name, 
 			int yearOfBirth, 
 			int cageNumber, 
-			int mealsPerDay
+			int mealsPerDay,
+			int mealPortionInKg
 		);
 		Crocodile() = default;
 		Crocodile(const Crocodile& copy);

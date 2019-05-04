@@ -7,7 +7,8 @@ zoo::Reptile::Reptile
 		int yearOfBirth, 
 		int lifespanInYears, 
 		int cageNumber,	
-		int mealsPerDay, 
+		int mealsPerDay,
+		int mealPortionInKg,
 		int incubationPeriodInMonths, 
 		int environmentTemperatureInCelsius
 	)
@@ -18,7 +19,8 @@ zoo::Reptile::Reptile
 		yearOfBirth, 
 		lifespanInYears, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		"Oviparous", 
 		"Cold-blooded"
 	)

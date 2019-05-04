@@ -20,7 +20,8 @@ namespace zoo
 			int yearOfBirth, 
 			int lifespanInYears, 
 			int cageNumber, 
-			int mealsPerDay, 
+			int mealsPerDay,
+			int mealPortionInKg,
 			int incubationPeriodInMonths, 
 			int avgTemperatureInCelsius
 		);

@@ -5,7 +5,8 @@ zoo::Elephant::Elephant
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Mammal
 	(
@@ -14,7 +15,8 @@ zoo::Elephant::Elephant
 		yearOfBirth, 
 		65, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		24, 
 		36
 	)

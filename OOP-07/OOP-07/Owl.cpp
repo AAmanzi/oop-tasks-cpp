@@ -5,7 +5,8 @@ zoo::Owl::Owl
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Bird
 	(
@@ -13,8 +14,9 @@ zoo::Owl::Owl
 		name, 
 		yearOfBirth, 
 		4, 
-		cageNumber, 
-		mealsPerDay, 
+		cageNumber,
+		mealsPerDay,
+		mealPortionInKg,
 		1, 
 		38
 	)

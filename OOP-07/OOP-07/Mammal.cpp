@@ -8,6 +8,7 @@ zoo::Mammal::Mammal
 		int lifespanInYears, 
 		int cageNumber, 
 		int mealsPerDay,
+		int mealPortionInKg,
 		int gestationPeriodInMonths, 
 		int avgTemperatureInCelsius
 	) 
@@ -17,7 +18,8 @@ zoo::Mammal::Mammal
 		yearOfBirth, 
 		lifespanInYears, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		"Viviparous", 
 		"Warm-blooded"
 	)

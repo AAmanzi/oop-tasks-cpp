@@ -5,7 +5,8 @@ zoo::GriffonVulture::GriffonVulture
 		std::string name, 
 		int yearOfBirth, 
 		int cageNumber, 
-		int mealsPerDay
+		int mealsPerDay,
+		int mealPortionInKg
 	)
 	: Bird
 	(
@@ -14,7 +15,8 @@ zoo::GriffonVulture::GriffonVulture
 		yearOfBirth, 
 		41, 
 		cageNumber, 
-		mealsPerDay, 
+		mealsPerDay,
+		mealPortionInKg,
 		1, 
 		38
 	)

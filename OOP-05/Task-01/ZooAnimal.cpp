@@ -11,6 +11,7 @@ zoo::ZooAnimal::ZooAnimal
 		int lifespanInYears, 
 		int cageNumber, 
 		int mealsPerDay,
+		int mealPortionInKg,
 		std::string fertilizationType,
 		std::string thermoregulationType
 	)
@@ -21,6 +22,7 @@ zoo::ZooAnimal::ZooAnimal
 	LifespanInYears = lifespanInYears;
 	CageNumber = cageNumber;
 	MealsPerDay = mealsPerDay;
+	MealPortionInKg = mealPortionInKg;
 	MassByYear = * new std::map<int, int>[lifespanInYears * 2];
 	FertilizationType = fertilizationType;
 	ThermoregulationType = thermoregulationType;
@@ -41,6 +43,7 @@ zoo::ZooAnimal::ZooAnimal(const ZooAnimal &copy) :
 	LifespanInYears(copy.LifespanInYears),
 	CageNumber(copy.CageNumber),
 	MealsPerDay(copy.MealsPerDay),
+	MealPortionInKg(copy.MealPortionInKg),
 	MassByYear(copy.MassByYear),
 	FertilizationType(copy.FertilizationType),
 	ThermoregulationType(copy.ThermoregulationType){};
@@ -141,6 +144,7 @@ void zoo::ZooAnimal::OutputTo(std::ostream& outputStream) const
 	outputStream << "Life expectancy: " << LifespanInYears << " years" << std::endl;
 	outputStream << "Cage number: " << CageNumber << std::endl;
 	outputStream << "Meals per day: " << MealsPerDay << std::endl;
+	outputStream << "Meal portion (kg)" << MealPortionInKg << std::endl;
 	outputStream << "Type of fertilization: " << FertilizationType << std::endl;
 	outputStream << "Type of thermoregulation: " << ThermoregulationType << std::endl;
 }
@@ -158,8 +162,7 @@ void zoo::ZooAnimal::InputTo(std::istream& inputStream)
 }
 
 void zoo::ZooAnimal::SetDefaults()
-{
-}
+{}
 
 std::istream& zoo::operator>>(std::istream& inputStream, ZooAnimal& toInput)
 {
@@ -173,6 +176,8 @@ std::istream& zoo::operator>>(std::istream& inputStream, ZooAnimal& toInput)
 	inputStream >> toInput.CageNumber;
 	std::cout << "Meals per day: ";
 	inputStream >> toInput.MealsPerDay;
+	std::cout << "Meal portion (kg): ";
+	inputStream >> toInput.MealPortionInKg;
 
 	toInput.SetDefaults();
 
