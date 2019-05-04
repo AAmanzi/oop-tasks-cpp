@@ -131,6 +131,11 @@ int zoo::ZooAnimal::GetMass()
 	return MassByYear.find(currentYear)->second;
 }
 
+int zoo::ZooAnimal::FoodPerDayInKg() const
+{
+	return MealsPerDay * MealPortionInKg;
+}
+
 auto zoo::ZooAnimal::GetName() const -> std::string
 {
 	return Name;

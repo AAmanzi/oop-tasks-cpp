@@ -17,11 +17,11 @@ namespace zoo
 	public:
 		std::string Species;
 		std::string Name;
-		int YearOfBirth;
-		int LifespanInYears;
-		int CageNumber;
-		int MealsPerDay;
-		int MealPortionInKg;
+		int YearOfBirth{};
+		int LifespanInYears{};
+		int CageNumber{};
+		int MealsPerDay{};
+		int MealPortionInKg{};
 		std::map<int, int> MassByYear;
 		std::string FertilizationType;
 		std::string ThermoregulationType;
@@ -52,6 +52,7 @@ namespace zoo
 		bool TryAddMassInfo(int mass, int yearToAdd);
 		int MassChangeDrastic();
 		int GetMass();
+		int FoodPerDayInKg() const;
 
 		std::string GetName() const;
 	};
