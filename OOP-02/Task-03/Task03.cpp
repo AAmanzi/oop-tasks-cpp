@@ -99,5 +99,4 @@ int main()
 	newVector.VectorFront()++;
 	newVector.VectorBack()++;
 
-	system("pause");
 }
